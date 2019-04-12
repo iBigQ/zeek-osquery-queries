@@ -8,6 +8,8 @@
 @load ./tables/listening_ports_log
 @load ./tables/users
 @load ./tables/users_log
+@load ./tables/interfaces
+@load ./tables/interfaces_log
 
 @load ./tables/process_events
 @load ./tables/process_events_log

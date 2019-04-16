@@ -16,7 +16,7 @@ export {
         };
 }
 
-event osuqery::interface_added(t: time, host_id: string, interface: string, mac: string, ip: string, mask: string) {
+event osquery::interface_added(t: time, host_id: string, interface: string, mac: string, ip: string, mask: string) {
         local info: Info = [
 		$t=t,
 		$host=host_id,

@@ -21,6 +21,6 @@ action: string, pid: int, fd_str: string, path: string, family: int, protocol: i
 
 event bro_init()
         {
-        local query = [$ev=osquery::table_socket_events,$query="SELECT action, pid, fd, path, family, protocol, local_address, remote_address, local_port, remote_port, time, success FROM socket_events"];
+        local query = [$ev=osquery::table_socket_events,$query="SELECT action, pid, fd, path, family, protocol, local_address, remote_address, local_port, remote_port, time, success FROM socket_events WHERE family=2", $utype=osquery::ADD];
         osquery::subscribe(query);
         }

@@ -27,6 +27,6 @@ pid: int, fd: int, family: int, socket: int, protocol: int, local_address: strin
 }
 
 event bro_init() {
-        local query = [$ev=osquery::table_listening_ports,$query="SELECT pid, fd, family, socket, protocol, address, port from listening_ports WHERE family=2;", $utype=osquery::BOTH];
+        local query = [$ev=osquery::table_listening_ports,$query="SELECT pid, fd, family, socket, protocol, address, port from listening_ports WHERE family=2", $utype=osquery::BOTH];
         osquery::subscribe(query);
 }

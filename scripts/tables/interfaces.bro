@@ -39,6 +39,6 @@ event osquery::table_interfaces(resultInfo: osquery::ResultInfo,
 
 event bro_init()
         {
-        local query = [$ev=osquery::table_interfaces,$query="SELECT d.interface, d.mac, a.address, a.mask FROM interface_addresses AS a INNER JOIN interface_details AS d ON a.interface=d.interface;", $utype=osquery::BOTH];
+        local query = [$ev=osquery::table_interfaces,$query="SELECT d.interface, d.mac, a.address, a.mask FROM interface_addresses AS a INNER JOIN interface_details AS d ON a.interface=d.interface", $utype=osquery::BOTH];
         osquery::subscribe(query);
         }

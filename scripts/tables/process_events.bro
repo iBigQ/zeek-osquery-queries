@@ -23,6 +23,6 @@ event osquery::table_process_events(resultInfo: osquery::ResultInfo,
 
 event bro_init()
         {
-        local query = [$ev=osquery::table_process_events,$query="SELECT pid,path,cmdline,cwd,uid,gid,time,parent FROM process_events"];
+        local query = [$ev=osquery::table_process_events,$query="SELECT pid, path, cmdline, cwd, uid, gid, time, parent FROM process_events", $utype=osquery::ADD];
         osquery::subscribe(query);
         }

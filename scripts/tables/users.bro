@@ -29,6 +29,6 @@ event osquery::table_users(resultInfo: osquery::ResultInfo,
 
 event bro_init()
         {
-        local query = [$ev=osquery::table_users,$query="SELECT uid,gid,uid_signed,gid_signed,username,description,directory,shell,uuid,type FROM users;", $utype=osquery::BOTH];
+        local query = [$ev=osquery::table_users,$query="SELECT uid, gid, uid_signed, gid_signed, username, description, directory, shell, uuid, type FROM users", $utype=osquery::BOTH];
         osquery::subscribe(query);
         }

@@ -33,6 +33,6 @@ event osquery::table_processes(resultInfo: osquery::ResultInfo,
 
 event bro_init()
         {
-        local query = [$ev=osquery::table_processes,$query="SELECT pid,name,path,cmdline,cwd,root,uid,gid,on_disk,start_time,parent,pgroup FROM processes", $utype=osquery::BOTH];
+        local query = [$ev=osquery::table_processes,$query="SELECT pid, name, path, cmdline, cwd, root, uid, gid, on_disk, start_time, parent, pgroup FROM processes", $utype=osquery::BOTH];
         osquery::subscribe(query);
         }

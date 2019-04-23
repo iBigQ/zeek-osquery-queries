@@ -1,7 +1,7 @@
 [package]
 description = Definition of SQL queries and logging of query results for osquery hosts.
 tags = osquery, sql queries, logging
-version = 0.2.0
+version = 0.3.0
 depends =
-  zeek-osquery-framework ~0.2.0
+  zeek-osquery-framework ~0.3.0
 script_dir = scripts

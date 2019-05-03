@@ -19,6 +19,7 @@ export {
         };
 }
 
+@if ( !Cluster::is_enabled() || Cluster::local_node_type() == Cluster::MANAGER )
 event process_open_socket_added(t: time, host_id: string, pid: int, fd: int, family: int, protocol: int, local_address: string, remote_address: string, local_port: int, remote_port: int) {
 	local local_addr: addr;
 	local remote_addr: addr;
@@ -40,6 +41,7 @@ event process_open_socket_added(t: time, host_id: string, pid: int, fd: int, fam
 
         Log::write(LOG, info);
 }
+@endif
 
 event bro_init() {
         Log::create_stream(LOG, [$columns=Info, $path="osq-process_open_sockets"]);

@@ -18,6 +18,7 @@ export {
         };
 }
 
+@if ( !Cluster::is_enabled() || Cluster::local_node_type() == Cluster::MANAGER )
 event osquery::listening_port_added(t: time, host_id: string, pid: int, fd: int, family: int, socket: int, protocol: int, local_address: string, local_port: int) {
 	local local_addr: addr;
 	if (local_address != "") local_addr = to_addr(local_address);
@@ -36,6 +37,7 @@ event osquery::listening_port_added(t: time, host_id: string, pid: int, fd: int,
 
         Log::write(LOG, info);
 }
+@endif
 
 event bro_init() {
         Log::create_stream(LOG, [$columns=Info, $path="osq-listening_ports"]);

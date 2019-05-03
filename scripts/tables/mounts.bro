@@ -27,9 +27,7 @@ event osquery::table_mounts(resultInfo: osquery::ResultInfo,
 	}
 }
 
-event bro_init()
-	{
-
+event bro_init(){
 	local ev = [$ev=osquery::table_mounts,$query="SELECT device, device_alias, path, type, blocks_size, blocks, flags FROM mounts", $utype=osquery::BOTH];
 	osquery::subscribe(ev);
 	}

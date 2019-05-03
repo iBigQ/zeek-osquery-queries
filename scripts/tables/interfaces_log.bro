@@ -16,6 +16,7 @@ export {
         };
 }
 
+@if ( !Cluster::is_enabled() || Cluster::local_node_type() == Cluster::MANAGER )
 event osquery::interface_added(t: time, host_id: string, interface: string, mac: string, ip: string, mask: string) {
         local info: Info = [
 		$t=t,
@@ -28,6 +29,7 @@ event osquery::interface_added(t: time, host_id: string, interface: string, mac:
 
         Log::write(LOG, info);
 }
+@endif
 
 event bro_init() {
         Log::create_stream(LOG, [$columns=Info, $path="osq-interfaces"]);

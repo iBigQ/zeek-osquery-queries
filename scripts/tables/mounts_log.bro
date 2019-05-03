@@ -18,6 +18,7 @@ export {
 	};
 }
 
+@if ( !Cluster::is_enabled() || Cluster::local_node_type() == Cluster::MANAGER )
 event osquery::mount_added(t: time, host_id: string, device: string, device_alias: string, path: string, typ: string, blocks_size: int, blocks: int, flags: string) {
 	local info: Info = [
 		 $t=t,
@@ -33,6 +34,7 @@ event osquery::mount_added(t: time, host_id: string, device: string, device_alia
 	
 	Log::write(LOG, info);
 }
+@endif
 
 event bro_init() {
 	Log::create_stream(LOG, [$columns=Info, $path="osq-mounts"]);

@@ -23,6 +23,7 @@ export {
         };
 }
 
+@if ( !Cluster::is_enabled() || Cluster::local_node_type() == Cluster::MANAGER )
 event osquery::socket_event_added(t: time, host_id: string, action: string, pid: int, fd: int, path: string, family: int, protocol: int, local_address: string, remote_address: string, local_port: int, remote_port: int, start_time: int, success: int) {
         if (action == "connect" || local_address == "") {
           local_address = "0.0.0.0";
@@ -50,6 +51,7 @@ event osquery::socket_event_added(t: time, host_id: string, action: string, pid:
 
         Log::write(LOG, info);
 }
+@endif
 
 event bro_init() {
         Log::create_stream(LOG, [$columns=Info, $path="osq-socket_events"]);

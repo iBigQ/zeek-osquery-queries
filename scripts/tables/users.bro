@@ -19,16 +19,15 @@ export {
 event osquery::table_users(resultInfo: osquery::ResultInfo,
 		uid: int, gid: int, uid_signed: int, gid_signed: int, username: string, 
 		description: string, directory: string, shell: string, uuid: string, user_type: string) {
-        if (resultInfo$utype == osquery::ADD) {
+	if (resultInfo$utype == osquery::ADD) {
 		event osquery::user_added(network_time(), resultInfo$host, uid, gid, uid_signed, gid_signed, username, description, directory, shell, uuid, user_type);
 	}
-       	if (resultInfo$utype == osquery::REMOVE) {
+	if (resultInfo$utype == osquery::REMOVE) {
 		event osquery::user_removed(network_time(), resultInfo$host, uid, gid, uid_signed, gid_signed, username, description, directory, shell, uuid, user_type);
 	}
 }
 
-event bro_init()
-        {
-        local query = [$ev=osquery::table_users,$query="SELECT uid, gid, uid_signed, gid_signed, username, description, directory, shell, uuid, type FROM users", $utype=osquery::BOTH];
-        osquery::subscribe(query);
-        }
+event bro_init() {
+	local query = [$ev=osquery::table_users,$query="SELECT uid, gid, uid_signed, gid_signed, username, description, directory, shell, uuid, type FROM users", $utype=osquery::BOTH];
+	osquery::subscribe(query);
+}

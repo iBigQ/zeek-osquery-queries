@@ -17,11 +17,11 @@ export {
 }
 
 event osquery::table_interfaces(resultInfo: osquery::ResultInfo,
-		interface: string, mac: string, ip: string, mask: string) {
+	interface: string, mac: string, ip: string, mask: string) {
 	# Remove interface name from IP
 	if ("%" in ip) {
 		# Find position of delimiter
-	        local i = 0;
+		local i = 0;
 		while (i < |ip|) {
 			if (ip[i] == "%") break;
 			i += 1;
@@ -29,16 +29,15 @@ event osquery::table_interfaces(resultInfo: osquery::ResultInfo,
 		ip = ip[:i];
 	}
 
-        if (resultInfo$utype == osquery::ADD) {
-		event osquery::interface_added(network_time(), resultInfo$host, interface, mac, ip, mask);
+		if (resultInfo$utype == osquery::ADD) {
+			event osquery::interface_added(network_time(), resultInfo$host, interface, mac, ip, mask);
 	}
-       	if (resultInfo$utype == osquery::REMOVE) {
-		event osquery::interface_removed(network_time(), resultInfo$host, interface, mac, ip , mask);
+		if (resultInfo$utype == osquery::REMOVE) {
+			event osquery::interface_removed(network_time(), resultInfo$host, interface, mac, ip , mask);
 	}
 }
 
-event bro_init()
-        {
-        local query = [$ev=osquery::table_interfaces,$query="SELECT d.interface, d.mac, a.address, a.mask FROM interface_addresses AS a INNER JOIN interface_details AS d ON a.interface=d.interface", $utype=osquery::BOTH];
-        osquery::subscribe(query);
-        }
+event bro_init() {
+	local query = [$ev=osquery::table_interfaces,$query="SELECT d.interface, d.mac, a.address, a.mask FROM interface_addresses AS a INNER JOIN interface_details AS d ON a.interface=d.interface", $utype=osquery::BOTH];
+	osquery::subscribe(query);
+}

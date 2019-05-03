@@ -18,16 +18,15 @@ export {
 
 event osquery::table_process_open_sockets(resultInfo: osquery::ResultInfo,
 pid: int, fd: int, family: int, protocol: int, local_address: string, remote_address: string, local_port: int, remote_port: int) {
-        if (resultInfo$utype == osquery::ADD && pid != -1) {
+	if (resultInfo$utype == osquery::ADD && pid != -1) {
 		event osquery::process_open_socket_added(network_time(), resultInfo$host, pid, fd, family, protocol, local_address, remote_address, local_port, remote_port);
 	}
-       	if (resultInfo$utype == osquery::REMOVE) {
+	if (resultInfo$utype == osquery::REMOVE) {
 		event osquery::process_open_socket_removed(network_time(), resultInfo$host, pid, fd, family, protocol, local_address, remote_address, local_port, remote_port);
 	}
 }
 
-event bro_init()
-        {
-        local query = [$ev=osquery::table_process_open_sockets,$query="SELECT pid, fd, family, protocol, local_address, remote_address, local_port, remote_port FROM process_open_sockets WHERE family=2", $utype=osquery::BOTH];
-        osquery::subscribe(query);
-        }
+event bro_init() {
+	local query = [$ev=osquery::table_process_open_sockets,$query="SELECT pid, fd, family, protocol, local_address, remote_address, local_port, remote_port FROM process_open_sockets WHERE family=2", $utype=osquery::BOTH];
+	osquery::subscribe(query);
+}

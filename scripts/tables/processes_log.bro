@@ -23,6 +23,7 @@ export {
         };
 }
 
+@if ( !Cluster::is_enabled() || Cluster::local_node_type() == Cluster::MANAGER )
 event osquery::process_added(t: time, host_id: string, pid: int, name: string, path: string, cmdline: string, cwd: string, root: string, uid: int, gid: int, on_disk: int, start_time: int, parent: int, pgroup: int) {
         local info: Info = [
 		$t=t,
@@ -43,6 +44,7 @@ event osquery::process_added(t: time, host_id: string, pid: int, name: string, p
 
         Log::write(LOG, info);
 }
+@endif
 
 event bro_init() {
         Log::create_stream(LOG, [$columns=Info, $path="osq-processes"]);

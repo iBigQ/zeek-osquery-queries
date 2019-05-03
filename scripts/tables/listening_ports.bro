@@ -18,15 +18,15 @@ export {
 
 event osquery::table_listening_ports(resultInfo: osquery::ResultInfo,
 pid: int, fd: int, family: int, socket: int, protocol: int, local_address: string, local_port: int) {
-        if (resultInfo$utype == osquery::ADD) {
-		event osquery::listening_port_added(network_time(), resultInfo$host, pid, fd, family, socket, protocol, local_address, local_port);
+		if (resultInfo$utype == osquery::ADD) {
+			event osquery::listening_port_added(network_time(), resultInfo$host, pid, fd, family, socket, protocol, local_address, local_port);
 	}
-        if (resultInfo$utype == osquery::REMOVE) {
-		event osquery::listening_port_removed(network_time(), resultInfo$host, pid, fd, family, socket, protocol, local_address, local_port);
+		if (resultInfo$utype == osquery::REMOVE) {
+			event osquery::listening_port_removed(network_time(), resultInfo$host, pid, fd, family, socket, protocol, local_address, local_port);
 	}
 }
 
 event bro_init() {
-        local query = [$ev=osquery::table_listening_ports,$query="SELECT pid, fd, family, socket, protocol, address, port FROM listening_ports WHERE family=2", $utype=osquery::BOTH];
-        osquery::subscribe(query);
+	local query = [$ev=osquery::table_listening_ports,$query="SELECT pid, fd, family, socket, protocol, address, port FROM listening_ports WHERE family=2", $utype=osquery::BOTH];
+	osquery::subscribe(query);
 }

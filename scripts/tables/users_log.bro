@@ -22,6 +22,7 @@ export {
         };
 }
 
+@if ( !Cluster::is_enabled() || Cluster::local_node_type() == Cluster::MANAGER )
 event osquery::user_added(t: time, host_id: string, uid: int, gid: int, uid_signed: int, gid_signed: int, username: string, description: string, directory: string, shell: string, uuid: string, user_type: string) {
         local info: Info = [
 		$t=t,
@@ -40,6 +41,7 @@ event osquery::user_added(t: time, host_id: string, uid: int, gid: int, uid_sign
 
         Log::write(LOG, info);
 }
+@endif
 
 event bro_init() {
         Log::create_stream(LOG, [$columns=Info, $path="osq-users"]);

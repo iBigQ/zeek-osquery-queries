@@ -1,5 +1,7 @@
 @load base/frameworks/cluster
 
+@load ./main
+
 @if ( !Cluster::is_enabled() || Cluster::local_node_type() == Cluster::MANAGER )
 @load ./tables/mounts
 @load ./tables/processes

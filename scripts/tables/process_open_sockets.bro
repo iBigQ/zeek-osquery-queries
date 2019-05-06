@@ -27,6 +27,6 @@ pid: int, fd: int, family: int, protocol: int, local_address: string, remote_add
 }
 
 event bro_init() {
-	local query = [$ev=osquery::table_process_open_sockets,$query="SELECT pid, fd, family, protocol, local_address, remote_address, local_port, remote_port FROM process_open_sockets WHERE family=2", $utype=osquery::BOTH];
+	local query = [$ev=osquery::table_process_open_sockets,$query="SELECT pid, fd, family, protocol, local_address, remote_address, local_port, remote_port FROM process_open_sockets WHERE family=2", $utype=osquery::BOTH, $inter=osquery::QUERY_INTERVAL];
 	osquery::subscribe(query);
 }

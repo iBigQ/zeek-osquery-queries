@@ -1,5 +1,5 @@
 @load base/frameworks/cluster
-@load site/zeek-osquery-framework
+@load zeek-osquery-framework
 
 @load ./main
 

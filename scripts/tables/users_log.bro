@@ -9,6 +9,7 @@ export {
         type Info: record {
                 t: time &log;
                 host: string &log;
+                added: bool &log;
                 uid: int &log;
                 gid: int &log;
 		uid_signed: int &log;
@@ -27,6 +28,27 @@ event osquery::user_added(t: time, host_id: string, uid: int, gid: int, uid_sign
         local info: Info = [
 		$t=t,
 		$host=host_id,
+		$added=T,
+               	$uid = uid,
+                $gid = gid,
+                $uid_signed = uid_signed,
+                $gid_signed = gid_signed,
+                $username = username,
+                $description = description,
+                $directory = directory,
+                $shell = shell,
+                $uuid = uuid,
+                $user_type = user_type
+        ];
+
+        Log::write(LOG, info);
+}
+
+event osquery::user_removed(t: time, host_id: string, uid: int, gid: int, uid_signed: int, gid_signed: int, username: string, description: string, directory: string, shell: string, uuid: string, user_type: string) {
+        local info: Info = [
+		$t=t,
+		$host=host_id,
+		$added=F,
                	$uid = uid,
                 $gid = gid,
                 $uid_signed = uid_signed,

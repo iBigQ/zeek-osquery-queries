@@ -9,6 +9,7 @@ export {
         type Info: record {
                 t: time &log;
                 host: string &log;
+		added: bool &log;
 		interface: string &log;
 		mac: string &log;
 		ip: string &log;
@@ -21,6 +22,7 @@ event osquery::interface_added(t: time, host_id: string, interface: string, mac:
         local info: Info = [
 		$t=t,
 		$host=host_id,
+		$added=T,
 		$interface=interface,
 		$mac=mac,
 		$ip=ip,
@@ -29,6 +31,21 @@ event osquery::interface_added(t: time, host_id: string, interface: string, mac:
 
         Log::write(LOG, info);
 }
+
+event osquery::interface_removed(t: time, host_id: string, interface: string, mac: string, ip: string, mask: string) {
+        local info: Info = [
+		$t=t,
+		$host=host_id,
+		$added=F,
+		$interface=interface,
+		$mac=mac,
+		$ip=ip,
+		$mask=mask
+        ];
+
+        Log::write(LOG, info);
+}
+
 @endif
 
 event bro_init() {

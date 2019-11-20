@@ -8,6 +8,7 @@ export {
         type Info: record {
                 t: time &log;
                 host: string &log;
+                added: bool &log;
                 pid: int &log;
                 name: string &log;
 		path: string &log;
@@ -28,6 +29,29 @@ event osquery::process_added(t: time, host_id: string, pid: int, name: string, p
         local info: Info = [
 		$t=t,
 		$host=host_id,
+		$added=T,
+               	$pid = pid,
+                $name = name,
+                $path = path,
+                $cmdline = cmdline,
+                $cwd = cwd,
+                $root = root,
+                $uid = uid,
+                $gid = gid,
+                $on_disk = on_disk,
+                $start_time = start_time,
+                $parent = parent,
+                $pgroup = pgroup
+        ];
+
+        Log::write(LOG, info);
+}
+
+event osquery::process_removed(t: time, host_id: string, pid: int, name: string, path: string, cmdline: string, cwd: string, root: string, uid: int, gid: int, on_disk: int, start_time: int, parent: int, pgroup: int) {
+        local info: Info = [
+		$t=t,
+		$host=host_id,
+		$added=F,
                	$pid = pid,
                 $name = name,
                 $path = path,

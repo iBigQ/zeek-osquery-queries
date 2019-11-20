@@ -8,6 +8,7 @@ export {
         type Info: record {
                 t: time &log;
                 host: string &log;
+                added: bool &log;
                 pid: int &log;
                 fd: int &log;
                 family: int &log;
@@ -29,6 +30,30 @@ event process_open_socket_added(t: time, host_id: string, pid: int, fd: int, fam
         local info: Info = [
 		$t=t,
 		$host=host_id,
+		$added=T,
+               	$pid = pid,
+                $fd = fd,
+                $family = family,
+                $protocol = protocol,
+                $local_address = local_addr,
+                $remote_address = remote_addr,
+                $local_port = local_port,
+                $remote_port = remote_port
+        ];
+
+        Log::write(LOG, info);
+}
+
+event process_open_socket_removed(t: time, host_id: string, pid: int, fd: int, family: int, protocol: int, local_address: string, remote_address: string, local_port: int, remote_port: int) {
+	local local_addr: addr;
+	local remote_addr: addr;
+	if (local_address != "") local_addr = to_addr(local_address);
+	if (remote_address != "") remote_addr = to_addr(remote_address);
+
+        local info: Info = [
+		$t=t,
+		$host=host_id,
+		$added=F,
                	$pid = pid,
                 $fd = fd,
                 $family = family,
